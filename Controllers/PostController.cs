@@ -37,6 +37,27 @@ public class PostController : ControllerBase
     }
 
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Post>> PostTodoItem(int id)
+    {
+
+        if (id <= 0)
+        {
+            return BadRequest();
+        }
+
+
+        Post post = await db.Posts.FindAsync(id);
+
+        if (post == null)
+        {
+            return NotFound("Post not found!");
+        }
+
+        return post;
+    }
+
+
 
     [HttpPut("{id}")]
     public async Task<ActionResult> PostTodoItem(int id, UpdatePostDTO postData)
